@@ -10,7 +10,11 @@
       src: templates/ngnix.conf.j2
       dest: ../api-gateway/nginx-conf/nginx.conf
 
-  tasks:
+  - name: Update locations conf
+    template:
+      src: templates/locations.conf.j2
+      dest: ../api-gateway/nginx-conf/conf.d/locations.conf
+
   - name: add container to inventory
     add_host:
       name: api-gateway

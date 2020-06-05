@@ -2,8 +2,8 @@
 access_log: /var/log/nginx/access.log
 error_log: /var/log/nginx/error.log
 locations:
-  - endpoint: employees
-    upstream: employees-ms
+  - endpoint: /employees
+    upstream: http://employees-ms
 upstreams:
   - name: employees-ms
     server: employees

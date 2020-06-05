@@ -1,0 +1,6 @@
+#jinja2:lstrip_blocks: True
+{% for location in locations %}
+location {{ location.endpoint }} {
+    proxy_pass {{ location.upstream }};
+}
+{% endfor %}
