@@ -23,7 +23,7 @@ else
   echo "*                                                *"
   echo "*                                                *"
   echo "*          SOMETHING WENT WRONG!! =( =(          *"
-  echo "*        I'd rather open a hotdogs place..       *"
+  echo "*            Hate when this happens...           *"
   echo "*                                                *"
   echo "*                                                *"
   echo "**************************************************"
