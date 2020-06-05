@@ -1,0 +1,23 @@
+---
+access_log: /var/log/nginx/access.log
+error_log: /var/log/nginx/error.log
+locations:
+  - endpoint: employees
+    upstream: employees-ms
+upstreams:
+  - name: employees-ms
+    server: employees
+    port: 9090
+servers:
+  - endpoint: employees
+    config_file: /etc/nginx/conf.d/*.conf
+    default_server: true
+    server_name: _
+    port: 8080
+  - endpoint: salaries
+    config_file: /etc/nginx/conf.d/*.conf
+    default_server: false
+    server_name: salaries.chiqui.com
+    port: 9090
+worker_connections: 256
+worker_processes: 1

@@ -1,0 +1,40 @@
+version: '2'
+services:
+  gateway:
+    container_name: api-gateway
+    build: api-gateway
+    links:
+      - employees
+    ports:
+      - 8080:8080
+    depends_on:
+      - mysql-container
+    volumes:
+      - ./api-gateway/nginx-conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./api-gateway/nginx-conf/conf.d:/etc/nginx/conf.d
+  employees:
+    build: ./microservices/employees
+    environment:
+      SERVICE_NAME: employees
+    depends_on:
+      - mysql-container
+    links:
+      - mysql-container
+    depends_on:
+      - mysql-container
+
+  mysql-container:
+    image: mysql:latest
+    container_name: mysql-container
+    ports:
+      - 3306:3306
+    working_dir: /test_db
+    volumes:
+      - ./mock_database/test_db:/test_db
+      - ./mock_database/import_db:/docker-entrypoint-initdb.d
+      - ./mock_database/db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: chiqui
+      MYSQL_PASSWORD: chiqui

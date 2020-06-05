@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  gather_facts: no
+  vars_files:
+    - vars/vars.yml
+
+  tasks:
+  - name: Update ngnix conf
+    template:
+      src: templates/ngnix.conf.j2
+      dest: ../api-gateway/nginx-conf/nginx.conf
+
+  tasks:
+  - name: add container to inventory
+    add_host:
+      name: api-gateway
+      ansible_connection: docker
+    changed_when: false
+
+  - name: run command in container
+    delegate_to: api-gateway
+    raw: service nginx reload

@@ -1,0 +1,25 @@
+#jinja2:lstrip_blocks: True
+worker_processes {{ worker_processes }};
+events {
+  worker_connections {{ worker_connections }};
+}
+
+http {
+
+    {% for upstream in upstreams %}
+    upstream {{ upstream.name }} {
+      server {{ upstream.server}}:{{ upstream.port}};
+    }
+    {% endfor %}
+
+    access_log {{ access_log }};
+    error_log {{ error_log }};
+
+    {% for server in servers %}
+    server {
+      listen {{ server.port }} {{ 'default_server' if server.default_server }};
+      server_name {{ server.server_name }};
+      include {{ server.config_file }};
+    }
+    {% endfor %}
+}
